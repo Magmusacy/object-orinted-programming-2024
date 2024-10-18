@@ -12,8 +12,6 @@ public class World {
 
     public static void run(MoveDirection[] instructions) {
 
-        System.out.println("Zwierzak idzie do przodu");
-
         for (MoveDirection instruction : instructions) {
             switch (instruction) {
                 case FORWARD -> System.out.println("Zwierzak idzie do przodu");
