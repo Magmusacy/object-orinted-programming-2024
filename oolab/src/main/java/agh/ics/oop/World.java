@@ -10,7 +10,7 @@ public class World {
         System.out.println("System zakończył działanie");
     }
 
-    public static void run(MoveDirection[] instructions) {
+    private static void run(MoveDirection[] instructions) {
 
         for (MoveDirection instruction : instructions) {
             switch (instruction) {

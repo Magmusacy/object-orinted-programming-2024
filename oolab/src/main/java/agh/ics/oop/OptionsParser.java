@@ -15,6 +15,7 @@ public class OptionsParser {
                 case "b" -> moveDirectionArray[i] = MoveDirection.BACKWARD;
                 case "r" -> moveDirectionArray[i] = MoveDirection.RIGHT;
                 case "l" -> moveDirectionArray[i] = MoveDirection.LEFT;
+                default -> throw new IllegalArgumentException("Invalid option: " + option);
             }
         }
 
