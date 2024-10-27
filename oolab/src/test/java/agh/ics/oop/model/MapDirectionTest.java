@@ -11,8 +11,11 @@ class MapDirectionTest {
         // given
         MapDirection north = MapDirection.NORTH;
 
+        // when
+        MapDirection result = north.next();
+
         // then
-        assertEquals(MapDirection.EAST, north.next());
+        assertEquals(MapDirection.EAST, result);
     }
 
     @Test
@@ -20,8 +23,11 @@ class MapDirectionTest {
         // given
         MapDirection east = MapDirection.EAST;
 
+        // when
+        MapDirection result = east.next();
+
         // then
-        assertEquals(MapDirection.SOUTH, east.next());
+        assertEquals(MapDirection.SOUTH, result);
     }
 
     @Test
@@ -29,8 +35,11 @@ class MapDirectionTest {
         // given
         MapDirection south = MapDirection.SOUTH;
 
+        // when
+        MapDirection result = south.next();
+
         // then
-        assertEquals(MapDirection.WEST, south.next());
+        assertEquals(MapDirection.WEST, result);
     }
 
     @Test
@@ -38,8 +47,11 @@ class MapDirectionTest {
         // given
         MapDirection west = MapDirection.WEST;
 
+        // when
+        MapDirection result = west.next();
+
         // then
-        assertEquals(MapDirection.NORTH, west.next());
+        assertEquals(MapDirection.NORTH, result);
     }
 
     @Test
@@ -47,8 +59,11 @@ class MapDirectionTest {
         // given
         MapDirection west = MapDirection.WEST;
 
+        // when
+        MapDirection result = west.previous();
+
         // then
-        assertEquals(MapDirection.SOUTH, west.previous());
+        assertEquals(MapDirection.SOUTH, result);
     }
 
     @Test
@@ -56,8 +71,11 @@ class MapDirectionTest {
         // given
         MapDirection south = MapDirection.SOUTH;
 
+        // when
+        MapDirection result = south.previous();
+
         // then
-        assertEquals(MapDirection.EAST, south.previous());
+        assertEquals(MapDirection.EAST, result);
     }
 
     @Test
@@ -65,8 +83,11 @@ class MapDirectionTest {
         // given
         MapDirection east = MapDirection.EAST;
 
+        // when
+        MapDirection result = east.previous();
+
         // then
-        assertEquals(MapDirection.NORTH, east.previous());
+        assertEquals(MapDirection.NORTH, result);
     }
 
     @Test
@@ -74,7 +95,10 @@ class MapDirectionTest {
         // given
         MapDirection north = MapDirection.NORTH;
 
+        // when
+        MapDirection result = north.previous();
+
         // then
-        assertEquals(MapDirection.WEST, north.previous());
+        assertEquals(MapDirection.WEST, result);
     }
 }
