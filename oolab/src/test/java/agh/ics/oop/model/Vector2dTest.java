@@ -165,13 +165,13 @@ class Vector2dTest {
     }
 
     @Test
-    void substractReturnsCorrectNewVector() {
+    void subtractReturnsCorrectNewVector() {
         // given
         Vector2d vec1 = new Vector2d(9, 21);
         Vector2d vec2 = new Vector2d(10, 23);
 
         // when
-        Vector2d result = vec1.substract(vec2);
+        Vector2d result = vec1.subtract(vec2);
         Vector2d correct = new Vector2d(-1, -2);
 
         // then
