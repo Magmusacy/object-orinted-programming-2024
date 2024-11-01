@@ -26,17 +26,14 @@ class OptionsParserTest {
     }
 
     @Test
-    void throwsErrorWhenIllegalOptionSpecified() {
-        // given
-        String[] options = {"l", ":(", "r", "f", "b"};
-
-        // when
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> OptionsParser.parseOptions(options)
-        );
-
-        // then
-        assertEquals("Invalid option: :(", exception.getMessage());
+    void omitsIllegalOptionFromTheInput() {
+        String[] options = {"l", "r", ";(", "b"};
+        MoveDirection[] result = OptionsParser.parseOptions(options);
+        MoveDirection[] correct = {
+                MoveDirection.LEFT,
+                MoveDirection.RIGHT,
+                MoveDirection.BACKWARD,
+        };
+        assertArrayEquals(correct, result);
     }
 }
