@@ -3,6 +3,8 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class OptionsParserTest {
@@ -13,27 +15,27 @@ class OptionsParserTest {
         String[] options = {"l", "r", "f", "b"};
 
         // when
-        MoveDirection[] result = OptionsParser.parseOptions(options);
+        List<MoveDirection> result = OptionsParser.parseOptions(options);
 
         // then
-        MoveDirection[] correct = {
-                MoveDirection.LEFT,
-                MoveDirection.RIGHT,
-                MoveDirection.FORWARD,
-                MoveDirection.BACKWARD
-        };
-        assertArrayEquals(correct, result);
+        List<MoveDirection> correct = List.of(
+            MoveDirection.LEFT,
+            MoveDirection.RIGHT,
+            MoveDirection.FORWARD,
+            MoveDirection.BACKWARD
+        );
+        assertEquals(correct, result);
     }
 
     @Test
     void omitsIllegalOptionFromTheInput() {
         String[] options = {"l", "r", ";(", "b"};
-        MoveDirection[] result = OptionsParser.parseOptions(options);
-        MoveDirection[] correct = {
+        List<MoveDirection> result = OptionsParser.parseOptions(options);
+        List<MoveDirection> correct = List.of(
                 MoveDirection.LEFT,
                 MoveDirection.RIGHT,
-                MoveDirection.BACKWARD,
-        };
-        assertArrayEquals(correct, result);
+                MoveDirection.BACKWARD
+        );
+        assertEquals(correct, result);
     }
 }

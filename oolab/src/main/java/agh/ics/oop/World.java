@@ -2,6 +2,8 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
 
+import java.util.List;
+
 public class World {
 
     public static void main (String[] args) {
@@ -10,7 +12,7 @@ public class World {
         System.out.println("System zakończył działanie");
     }
 
-    private static void run(MoveDirection[] instructions) {
+    private static void run(List<MoveDirection> instructions) {
 
         for (MoveDirection instruction : instructions) {
             switch (instruction) {

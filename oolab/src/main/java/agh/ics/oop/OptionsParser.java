@@ -2,34 +2,24 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class OptionsParser {
 
-    public static MoveDirection[] parseOptions(String[] options) {
+    public static List<MoveDirection> parseOptions(String[] options) {
 
-        MoveDirection[] moveDirectionArray = new MoveDirection[getCorrectOptionsLength(options)];
-        int correctOptionsLength = 0;
+        List<MoveDirection> moves = new LinkedList<>();
 
-        for (int i = 0; i < options.length; i++) {
-            String option = options[i];
-            switch (option) {
-                case "f" -> moveDirectionArray[correctOptionsLength++] = MoveDirection.FORWARD;
-                case "b" -> moveDirectionArray[correctOptionsLength++] = MoveDirection.BACKWARD;
-                case "r" -> moveDirectionArray[correctOptionsLength++] = MoveDirection.RIGHT;
-                case "l" -> moveDirectionArray[correctOptionsLength++] = MoveDirection.LEFT;
-            }
-        }
-
-        return moveDirectionArray;
-    }
-
-    private static int getCorrectOptionsLength(String[] options) {
-
-        int correctLength = 0;
         for (String option : options) {
             switch (option) {
-                case "f", "b", "r", "l" -> correctLength++;
+                case "f" -> moves.add(MoveDirection.FORWARD);
+                case "b" -> moves.add(MoveDirection.BACKWARD);
+                case "r" -> moves.add(MoveDirection.RIGHT);
+                case "l" -> moves.add(MoveDirection.LEFT);
             }
         }
-        return correctLength;
+
+        return moves;
     }
 }
