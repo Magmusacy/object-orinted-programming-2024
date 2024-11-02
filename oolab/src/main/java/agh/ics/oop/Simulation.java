@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
-    private List<Animal> animals;
-    private List<MoveDirection> directions;
+    private final List<Animal> animals;
+    private final List<MoveDirection> directions;
 
     public Simulation(List<Vector2d> startingPositions, List<MoveDirection> directions) {
         this.animals = createAnimals(startingPositions);
@@ -24,6 +24,10 @@ public class Simulation {
             currentAnimal.move(direction);
             System.out.printf("Zwierzę %s : %s%n", currentAnimalIndex, currentAnimal);
         }
+    }
+
+    public List<Animal> getAnimals() {
+        return animals;
     }
 
     private List<Animal> createAnimals(List<Vector2d> startingPositions) {
