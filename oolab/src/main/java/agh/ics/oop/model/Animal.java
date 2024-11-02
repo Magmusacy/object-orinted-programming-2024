@@ -16,6 +16,14 @@ public class Animal {
         this.position = position;
     }
 
+    public MapDirection getOrientation() {
+        return orientation;
+    }
+
+    public Vector2d getPosition() {
+        return position;
+    }
+
     public String toString() {
         return String.format("(%d, %d) - %s", position.getX(), position.getY(), orientation);
     }
