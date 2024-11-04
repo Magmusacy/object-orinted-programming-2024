@@ -3,6 +3,8 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class OptionsParserTest {
@@ -13,30 +15,27 @@ class OptionsParserTest {
         String[] options = {"l", "r", "f", "b"};
 
         // when
-        MoveDirection[] result = OptionsParser.parseOptions(options);
+        List<MoveDirection> result = OptionsParser.parseOptions(options);
 
         // then
-        MoveDirection[] correct = {
-                MoveDirection.LEFT,
-                MoveDirection.RIGHT,
-                MoveDirection.FORWARD,
-                MoveDirection.BACKWARD
-        };
-        assertArrayEquals(correct, result);
+        List<MoveDirection> correct = List.of(
+            MoveDirection.LEFT,
+            MoveDirection.RIGHT,
+            MoveDirection.FORWARD,
+            MoveDirection.BACKWARD
+        );
+        assertEquals(correct, result);
     }
 
     @Test
-    void throwsErrorWhenIllegalOptionSpecified() {
-        // given
-        String[] options = {"l", ":(", "r", "f", "b"};
-
-        // when
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> OptionsParser.parseOptions(options)
+    void omitsIllegalOptionFromTheInput() {
+        String[] options = {"l", "r", ";(", "b"};
+        List<MoveDirection> result = OptionsParser.parseOptions(options);
+        List<MoveDirection> correct = List.of(
+                MoveDirection.LEFT,
+                MoveDirection.RIGHT,
+                MoveDirection.BACKWARD
         );
-
-        // then
-        assertEquals("Invalid option: :(", exception.getMessage());
+        assertEquals(correct, result);
     }
 }
