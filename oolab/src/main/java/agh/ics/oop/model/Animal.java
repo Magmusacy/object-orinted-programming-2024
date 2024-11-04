@@ -1,18 +1,16 @@
 package agh.ics.oop.model;
 
 public class Animal {
-    private final Vector2d upperRight = new Vector2d(4, 4);
-    private final Vector2d lowerLeft = new Vector2d(0, 0);
-    private MapDirection orientation;
+    private static final Vector2d upperRight = new Vector2d(4, 4);
+    private static final Vector2d lowerLeft = new Vector2d(0, 0);
+    private MapDirection orientation = MapDirection.NORTH;
     private Vector2d position;
 
     public Animal() {
-        this.orientation = MapDirection.NORTH;
         this.position = new Vector2d(2, 2);
     }
 
     public Animal(Vector2d position) {
-        this.orientation = MapDirection.NORTH;
         this.position = position;
     }
 
@@ -25,7 +23,7 @@ public class Animal {
     }
 
     public String toString() {
-        return String.format("(%d, %d) - %s", position.getX(), position.getY(), orientation);
+        return String.format("%s - %s", position, orientation);
     }
 
     public boolean isAt(Vector2d position) {
