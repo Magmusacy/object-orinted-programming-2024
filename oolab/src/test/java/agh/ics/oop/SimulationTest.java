@@ -55,4 +55,18 @@ class SimulationTest {
         assertTrue(animal1.isAt(new Vector2d(2, 0)));
         assertTrue(animal2.isAt(new Vector2d(3, 4)));
     }
+
+    @Test
+    void simulationRunsCorrectlyDifferentMapSize() {
+        WorldMap map = new RectangularMap(10, 13);
+        String[] moves = {"f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f"};
+        List<Vector2d> startingPositions = List.of(new Vector2d(2, 2));
+        List<MoveDirection> parsedDirections = OptionsParser.parseOptions(moves);
+        Simulation simulation = new Simulation(startingPositions, parsedDirections, map);
+
+        simulation.run();
+
+        Animal animal1 = simulation.getAnimals().get(0);
+        assertTrue(animal1.isAt(new Vector2d(9, 12)));
+    }
 }
