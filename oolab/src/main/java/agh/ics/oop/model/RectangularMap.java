@@ -11,7 +11,7 @@ public class RectangularMap implements WorldMap {
     private final Map<Vector2d, Animal> animals = new HashMap<>();
 
     public RectangularMap(int width, int height) {
-        this.upperRight = new Vector2d(width, height);
+        this.upperRight = new Vector2d(width - 1, height - 1);
         this.lowerLeft = new Vector2d(0, 0);
     }
 

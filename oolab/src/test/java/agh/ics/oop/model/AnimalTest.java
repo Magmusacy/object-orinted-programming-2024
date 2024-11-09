@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnimalTest {
+    private static final MoveValidator validator = new RectangularMap(5, 5);
+
     @Test
     void initializesDefaultAnimalWithNorthOrientationAndCorrectPosition() {
         MapDirection defaultOrientation = MapDirection.NORTH;
@@ -30,7 +32,7 @@ class AnimalTest {
     @Test
     void toStringReturnsCorrectStringWithDefaultOrientation() {
         Animal animal = new Animal(new Vector2d(3, 2));
-        String correct = "(3, 2) - Północ";
+        String correct = "↑";
 
         assertEquals(correct, animal.toString());
     }
@@ -49,16 +51,16 @@ class AnimalTest {
     void moveChangesOrientationToRightCorrectly() {
         Animal animal = new Animal(new Vector2d(5, 5));
 
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
         assertEquals(MapDirection.EAST, animal.getOrientation());
 
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
         assertEquals(MapDirection.SOUTH, animal.getOrientation());
 
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
         assertEquals(MapDirection.WEST, animal.getOrientation());
 
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
         assertEquals(MapDirection.NORTH, animal.getOrientation());
     }
 
@@ -66,16 +68,16 @@ class AnimalTest {
     void moveChangesOrientationToLeftCorrectly() {
         Animal animal = new Animal(new Vector2d(5, 5));
 
-        animal.move(MoveDirection.LEFT);
+        animal.move(validator, MoveDirection.LEFT);
         assertEquals(MapDirection.WEST, animal.getOrientation());
 
-        animal.move(MoveDirection.LEFT);
+        animal.move(validator, MoveDirection.LEFT);
         assertEquals(MapDirection.SOUTH, animal.getOrientation());
 
-        animal.move(MoveDirection.LEFT);
+        animal.move(validator, MoveDirection.LEFT);
         assertEquals(MapDirection.EAST, animal.getOrientation());
 
-        animal.move(MoveDirection.LEFT);
+        animal.move(validator, MoveDirection.LEFT);
         assertEquals(MapDirection.NORTH, animal.getOrientation());
     }
 
@@ -83,7 +85,7 @@ class AnimalTest {
     void movingNorthForwardWorksCorrectly() {
         Animal animal = new Animal();
 
-        animal.move(MoveDirection.FORWARD);
+        animal.move(validator, MoveDirection.FORWARD);
 
         assertEquals(new Vector2d(2, 3), animal.getPosition());
     }
@@ -92,7 +94,7 @@ class AnimalTest {
     void canNotGetOutOfBoundsNorthForward() {
         Animal animal = new Animal(new Vector2d(4, 4));
 
-        animal.move(MoveDirection.FORWARD);
+        animal.move(validator, MoveDirection.FORWARD);
 
         assertEquals(new Vector2d(4, 4), animal.getPosition());
     }
@@ -101,7 +103,7 @@ class AnimalTest {
     void movingNorthBackwardWorksCorrectly() {
         Animal animal = new Animal();
 
-        animal.move(MoveDirection.BACKWARD);
+        animal.move(validator, MoveDirection.BACKWARD);
 
         assertEquals(new Vector2d(2, 1), animal.getPosition());
     }
@@ -109,9 +111,9 @@ class AnimalTest {
     @Test
     void canNotGetOutOfBoundsNorthBackward() {
         Animal animal = new Animal(new Vector2d(0, 2));
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.BACKWARD);
+        animal.move(validator, MoveDirection.BACKWARD);
 
         assertEquals(new Vector2d(0, 2), animal.getPosition());
     }
@@ -119,9 +121,9 @@ class AnimalTest {
     @Test
     void movingEastForwardWorksCorrectly() {
         Animal animal = new Animal();
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.FORWARD);
+        animal.move(validator, MoveDirection.FORWARD);
 
         assertEquals(new Vector2d(3, 2), animal.getPosition());
     }
@@ -129,9 +131,9 @@ class AnimalTest {
     @Test
     void canNotGetOutOfBoundsEastForward() {
         Animal animal = new Animal(new Vector2d(4, 2));
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.FORWARD);
+        animal.move(validator, MoveDirection.FORWARD);
 
         assertEquals(new Vector2d(4, 2), animal.getPosition());
     }
@@ -139,9 +141,9 @@ class AnimalTest {
     @Test
     void movingEastBackwardWorksCorrectly() {
         Animal animal = new Animal();
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.BACKWARD);
+        animal.move(validator, MoveDirection.BACKWARD);
 
         assertEquals(new Vector2d(1, 2), animal.getPosition());
     }
@@ -149,9 +151,9 @@ class AnimalTest {
     @Test
     void canNotGetOutOfBoundsEastBackward() {
         Animal animal = new Animal(new Vector2d(0, 2));
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.BACKWARD);
+        animal.move(validator, MoveDirection.BACKWARD);
 
         assertEquals(new Vector2d(0, 2), animal.getPosition());
     }
@@ -159,10 +161,10 @@ class AnimalTest {
     @Test
     void movingSouthForwardWorksCorrectly() {
         Animal animal = new Animal();
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.FORWARD);
+        animal.move(validator, MoveDirection.FORWARD);
 
         assertEquals(new Vector2d(2, 1), animal.getPosition());
     }
@@ -170,10 +172,10 @@ class AnimalTest {
     @Test
     void canNotGetOutOfBoundsSouthForward() {
         Animal animal = new Animal(new Vector2d(2, 0));
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.FORWARD);
+        animal.move(validator, MoveDirection.FORWARD);
 
         assertEquals(new Vector2d(2, 0), animal.getPosition());
     }
@@ -181,10 +183,10 @@ class AnimalTest {
     @Test
     void movingSouthBackwardWorksCorrectly() {
         Animal animal = new Animal();
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.BACKWARD);
+        animal.move(validator, MoveDirection.BACKWARD);
 
         assertEquals(new Vector2d(2, 3), animal.getPosition());
     }
@@ -192,10 +194,10 @@ class AnimalTest {
     @Test
     void canNotGetOutOfBoundsSouthBackward() {
         Animal animal = new Animal(new Vector2d(2, 4));
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
+        animal.move(validator, MoveDirection.RIGHT);
 
-        animal.move(MoveDirection.BACKWARD);
+        animal.move(validator, MoveDirection.BACKWARD);
 
         assertEquals(new Vector2d(2, 4), animal.getPosition());
     }
@@ -203,9 +205,9 @@ class AnimalTest {
     @Test
     void movingWestForwardWorksCorrectly() {
         Animal animal = new Animal();
-        animal.move(MoveDirection.LEFT);
+        animal.move(validator, MoveDirection.LEFT);
 
-        animal.move(MoveDirection.FORWARD);
+        animal.move(validator, MoveDirection.FORWARD);
 
         assertEquals(new Vector2d(1, 2), animal.getPosition());
     }
@@ -213,9 +215,9 @@ class AnimalTest {
     @Test
     void canNotGetOutOfBoundsWestForward() {
         Animal animal = new Animal(new Vector2d(0, 2));
-        animal.move(MoveDirection.LEFT);
+        animal.move(validator, MoveDirection.LEFT);
 
-        animal.move(MoveDirection.FORWARD);
+        animal.move(validator, MoveDirection.FORWARD);
 
         assertEquals(new Vector2d(0, 2), animal.getPosition());
     }
@@ -223,9 +225,9 @@ class AnimalTest {
     @Test
     void movingWestBackwardWorksCorrectly() {
         Animal animal = new Animal();
-        animal.move(MoveDirection.LEFT);
+        animal.move(validator, MoveDirection.LEFT);
 
-        animal.move(MoveDirection.BACKWARD);
+        animal.move(validator, MoveDirection.BACKWARD);
 
         assertEquals(new Vector2d(3, 2), animal.getPosition());
     }
@@ -233,10 +235,9 @@ class AnimalTest {
     @Test
     void canNotGetOutOfBoundsWestBackward() {
         Animal animal = new Animal(new Vector2d(4, 2));
-        animal.move(MoveDirection.LEFT);
+        animal.move(validator, MoveDirection.LEFT);
 
-        animal.move(MoveDirection.BACKWARD);
-
+        animal.move(validator, MoveDirection.BACKWARD);
         assertEquals(new Vector2d(4, 2), animal.getPosition());
     }
 }
