@@ -9,48 +9,37 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Simulation {
-    private final List<Animal> animals;
+public class Simulation<T, P> {
+    private final List<T> mapObjects;
     private final List<MoveDirection> directions;
-    private final WorldMap map;
+    private final WorldMap<T, P> map;
 
-    public Simulation(List<Vector2d> startingPositions, List<MoveDirection> directions, WorldMap map) {
+    // Zamiast przekazywania pozycji i tworzenia zwierzaków w simulation, będę tworzył je np. w main albo w jakims
+    // parserze zwierząt i tu przekazywał unikalną listę zwierząt (nie ma dwoch na tej samej pozycji)
+    public Simulation(List<T> mapObjects, List<MoveDirection> directions, WorldMap<T, P> map) {
         this.map = map;
-        this.animals = createAnimals(startingPositions);
+        this.mapObjects = mapObjects;
         this.directions = directions;
-        populateMap(animals);
+        populateMap(mapObjects);
     }
 
     public void run() {
         int iter = 0;
         for (MoveDirection direction : directions) {
-            int currentAnimalIndex = iter++ % animals.size();
-            Animal currentAnimal = animals.get(currentAnimalIndex);
-            map.move(currentAnimal, direction);
+            int currentMapObjectIndex = iter++ % mapObjects.size();
+            T currentMapObject = mapObjects.get(currentMapObjectIndex);
+            map.move(currentMapObject, direction);
             System.out.println(map);
         }
     }
 
-    public List<Animal> getAnimals() {
-        return Collections.unmodifiableList(animals);
+    public List<T> getMapObjects() {
+        return Collections.unmodifiableList(mapObjects);
     }
 
-    private List<Animal> createAnimals(List<Vector2d> startingPositions) {
-        List<Animal> animals = new ArrayList<>();
-
-        for (Vector2d position : startingPositions) {
-            Animal newAnimal = new Animal(position);
-            if (map.place(newAnimal)) {
-                animals.add(newAnimal);
-            }
-        }
-
-        return animals;
-    }
-
-    private void populateMap(List<Animal> animals) {
-        for (Animal animal : animals) {
-            map.place(animal);
+    private void populateMap(List<T> mapObjects) {
+        for (T mapObject : mapObjects) {
+            map.place(mapObject);
         }
     }
 }
