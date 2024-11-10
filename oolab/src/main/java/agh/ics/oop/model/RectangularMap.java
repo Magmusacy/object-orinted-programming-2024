@@ -15,6 +15,7 @@ public class RectangularMap implements WorldMap {
         this.lowerLeft = new Vector2d(0, 0);
     }
 
+    @Override
     public boolean place(Animal animal) {
         Vector2d position = animal.getPosition();
         if (canMoveTo(position)) {
@@ -24,6 +25,7 @@ public class RectangularMap implements WorldMap {
         return false;
     }
 
+    @Override
     public void move(Animal animal, MoveDirection direction) {
         if (!animals.containsValue(animal)) {
             return;
@@ -38,19 +40,23 @@ public class RectangularMap implements WorldMap {
         }
     }
 
+    @Override
     public String toString() {
         MapVisualizer map = new MapVisualizer(this);
         return map.draw(lowerLeft, upperRight);
     }
 
+    @Override
     public boolean isOccupied(Vector2d position) {
         return animals.containsKey(position);
     }
 
+    @Override
     public Animal objectAt(Vector2d position) {
         return animals.get(position);
     }
 
+    @Override
     public boolean canMoveTo(Vector2d position) {
         return position.precedes(upperRight) && position.follows(lowerLeft) && !isOccupied(position);
     }
