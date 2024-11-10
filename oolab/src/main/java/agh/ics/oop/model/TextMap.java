@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TextMap implements WorldMap<String, Integer> {
+public class TextMap implements WorldNumberPositionMap<String, Integer> {
     private final List<String> map = new ArrayList<>();
 
     @Override
