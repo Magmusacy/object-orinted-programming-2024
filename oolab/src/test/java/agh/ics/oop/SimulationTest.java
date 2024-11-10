@@ -17,7 +17,6 @@ class SimulationTest {
         List<MoveDirection> parsedDirections = OptionsParser.parseOptions(moves);
         Simulation simulation = new Simulation(startingPositions, parsedDirections, map);
 
-        System.out.println(map);
         simulation.run();
 
         Animal animal1 = simulation.getAnimals().get(0);
@@ -68,5 +67,19 @@ class SimulationTest {
 
         Animal animal1 = simulation.getAnimals().get(0);
         assertTrue(animal1.isAt(new Vector2d(9, 12)));
+    }
+
+    @Test
+    void simulationDoesNotCreateAnimalsThatCanNotBePlacedOnTheMap() {
+        WorldMap map = new RectangularMap(5, 5);
+        String[] moves = {"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
+        Vector2d position = new Vector2d(2, 2);
+        List<Vector2d> startingPositions = List.of(position, position);
+        List<MoveDirection> parsedDirections = OptionsParser.parseOptions(moves);
+        Simulation simulation = new Simulation(startingPositions, parsedDirections, map);
+
+        List<Animal> animals = simulation.getAnimals();
+        assertEquals(1, animals.size());
+        assertTrue(animals.get(0).isAt(position));
     }
 }

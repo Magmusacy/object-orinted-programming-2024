@@ -15,9 +15,9 @@ public class Simulation {
     private final WorldMap map;
 
     public Simulation(List<Vector2d> startingPositions, List<MoveDirection> directions, WorldMap map) {
+        this.map = map;
         this.animals = createAnimals(startingPositions);
         this.directions = directions;
-        this.map = map;
         populateMap(animals);
     }
 
@@ -39,7 +39,10 @@ public class Simulation {
         List<Animal> animals = new ArrayList<>();
 
         for (Vector2d position : startingPositions) {
-            animals.add(new Animal(position));
+            Animal newAnimal = new Animal(position);
+            if (map.place(newAnimal)) {
+                animals.add(newAnimal);
+            }
         }
 
         return animals;
