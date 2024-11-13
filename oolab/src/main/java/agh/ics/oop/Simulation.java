@@ -18,7 +18,6 @@ public class Simulation {
         this.map = map;
         this.animals = createAnimals(startingPositions);
         this.directions = directions;
-        populateMap(animals);
     }
 
     public void run() {
@@ -46,11 +45,5 @@ public class Simulation {
         }
 
         return animals;
-    }
-
-    private void populateMap(List<Animal> animals) {
-        for (Animal animal : animals) {
-            map.place(animal);
-        }
     }
 }
