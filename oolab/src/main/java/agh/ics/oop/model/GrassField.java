@@ -23,7 +23,10 @@ public class GrassField implements WorldMap {
             uniqNumbers.add(randomVector);
             grassElements.put(randomVector, new Grass(randomVector));
         }
-        System.out.println(grassElements);
+    }
+
+    public Map<Vector2d, Grass> getGrassElements() {
+        return Collections.unmodifiableMap(grassElements);
     }
 
     @Override
