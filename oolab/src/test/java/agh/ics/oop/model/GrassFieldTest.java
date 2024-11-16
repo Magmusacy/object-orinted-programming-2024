@@ -90,13 +90,11 @@ class GrassFieldTest {
     void objectAtBehavesCorrectly() {
         GrassField grassField = new GrassField(10);
         Vector2d animalPosition = new Vector2d(4, 4);
-        Vector2d emptyPosition = new Vector2d(4, 3);
         Animal animal = new Animal(animalPosition);
 
         grassField.place(animal);
 
         assertEquals(animal, grassField.objectAt(animalPosition));
-        assertNull(grassField.objectAt(emptyPosition));
     }
 
     @Test

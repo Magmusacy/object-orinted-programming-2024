@@ -1,16 +1,13 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.MapVisualizer;
-
 import java.util.*;
 
 import static java.lang.Math.sqrt;
 
-public class GrassField implements WorldMap {
-    private final Map<Vector2d, Animal> animals = new HashMap<>();
+public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grassElements = new HashMap<>();
-    private final static Vector2d LOWER_LEFT = new Vector2d(0, 0);
-    private final MapVisualizer map = new MapVisualizer(this);
+    private final Vector2d lowerLeft = new Vector2d(0, 0);
+    private Vector2d upperRight = lowerLeft;
 
     public GrassField(int grassFieldsNumber) {
         int maxRange = (int) sqrt(10*grassFieldsNumber);
@@ -22,6 +19,7 @@ public class GrassField implements WorldMap {
             Vector2d randomVector = new Vector2d(randomX, randomY);
             uniqNumbers.add(randomVector);
             grassElements.put(randomVector, new Grass(randomVector));
+            upperRight = upperRight.precedes(randomVector) ? randomVector : upperRight;
         }
     }
 
@@ -32,59 +30,32 @@ public class GrassField implements WorldMap {
     @Override
     public boolean place(Animal animal) {
         Vector2d position = animal.getPosition();
-        if (canMoveTo(position)) {
-            animals.put(position, animal);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void move(Animal animal, MoveDirection direction) {
-        if (!animals.containsValue(animal)) {
-            return;
-        }
-        Vector2d prevPosition = animal.getPosition();
-        animal.move(this, direction);
-        Vector2d newPosition = animal.getPosition();
-
-        if (!prevPosition.equals(newPosition)) {
-            animals.remove(prevPosition);
-            place(animal);
-        }
+        upperRight = upperRight.precedes(position) ? position : upperRight;
+        return super.place(animal);
     }
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        return isOccupiedByAnimal(position) || grassElements.containsKey(position);
+        return super.isOccupied(position) || grassElements.containsKey(position);
     }
 
     @Override
     public WorldElement objectAt(Vector2d position) {
-        return animals.get(position) != null ? animals.get(position) : grassElements.get(position);
+        return super.objectAt(position) != null ? super.objectAt(position) : grassElements.get(position);
     }
-
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return !isOccupiedByAnimal(position) && LOWER_LEFT.precedes(position);
+        return !super.isOccupied(position) && lowerLeft.precedes(position);
     }
 
     @Override
-    public String toString() {
-        Vector2d upperRight = new Vector2d(0, 0);
-        for (Vector2d vector : animals.keySet()) {
-            upperRight = upperRight.precedes(vector) ? vector : upperRight;
-        }
-
-        for (Vector2d vector : grassElements.keySet()) {
-            upperRight = upperRight.precedes(vector) ? vector : upperRight;
-        }
-
-        return map.draw(LOWER_LEFT, upperRight);
+    protected Vector2d getLowerLeft() {
+        return lowerLeft;
     }
 
-    private boolean isOccupiedByAnimal(Vector2d position) {
-        return animals.containsKey(position);
+    @Override
+    protected Vector2d getUpperRight() {
+        return upperRight;
     }
 }
