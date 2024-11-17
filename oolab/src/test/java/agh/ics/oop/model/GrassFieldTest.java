@@ -19,6 +19,16 @@ class GrassFieldTest {
     }
 
     @Test
+    void grassFieldCanBeInitializedWithNoGrass() {
+        int correctAmount = 0;
+
+        GrassField grassField = new GrassField(correctAmount);
+        int amountOfGrassFields = grassField.getGrassElements().size();
+
+        assertEquals(correctAmount, amountOfGrassFields);
+    }
+
+    @Test
     void placingAnimalWorksOnlyInFirstQuadrant() {
         GrassField grassField = new GrassField(10);
 
