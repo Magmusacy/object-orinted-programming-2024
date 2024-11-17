@@ -1,8 +1,8 @@
 package agh.ics.oop.model;
 
-import java.util.*;
+import agh.ics.oop.model.util.RandomPositionGenerator;
 
-import static java.lang.Math.sqrt;
+import java.util.*;
 
 public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grassElements = new HashMap<>();
@@ -10,16 +10,11 @@ public class GrassField extends AbstractWorldMap {
     private Vector2d upperRight = lowerLeft;
 
     public GrassField(int grassFieldsNumber) {
-        int maxRange = (int) sqrt(10*grassFieldsNumber);
-        Random random = new Random();
-        Set<Vector2d> uniqNumbers = new HashSet<>();
-        while (uniqNumbers.size() < grassFieldsNumber) {
-            int randomX = random.nextInt(maxRange);
-            int randomY = random.nextInt(maxRange);
-            Vector2d randomVector = new Vector2d(randomX, randomY);
-            uniqNumbers.add(randomVector);
-            grassElements.put(randomVector, new Grass(randomVector));
-            upperRight = upperRight.precedes(randomVector) ? randomVector : upperRight;
+        int maxCoordinate = (int) Math.sqrt(10 * grassFieldsNumber);
+        RandomPositionGenerator randomPositions = new RandomPositionGenerator(maxCoordinate, maxCoordinate, grassFieldsNumber);
+        for (Vector2d grassPosition : randomPositions) {
+            updateUpperRight(grassPosition);
+            grassElements.put(grassPosition, new Grass(grassPosition));
         }
     }
 
@@ -29,8 +24,7 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public boolean place(Animal animal) {
-        Vector2d position = animal.getPosition();
-        upperRight = upperRight.precedes(position) ? position : upperRight;
+        updateUpperRight(animal.getPosition());
         return super.place(animal);
     }
 
@@ -64,5 +58,9 @@ public class GrassField extends AbstractWorldMap {
         List<WorldElement> combinedList = new ArrayList<>(super.getElements());
         combinedList.addAll(grassElements.values());
         return List.copyOf(combinedList);
+    }
+
+    private void updateUpperRight(Vector2d newPosition) {
+        upperRight = newPosition.precedes(upperRight) ? upperRight : new Vector2d(Math.max(newPosition.getX(), upperRight.getX()), Math.max(newPosition.getY(), upperRight.getY()));
     }
 }
