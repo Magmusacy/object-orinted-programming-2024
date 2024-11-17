@@ -58,4 +58,11 @@ public class GrassField extends AbstractWorldMap {
     protected Vector2d getUpperRight() {
         return upperRight;
     }
+
+    @Override
+    public List<WorldElement> getElements() {
+        List<WorldElement> combinedList = new ArrayList<>(super.getElements());
+        combinedList.addAll(grassElements.values());
+        return List.copyOf(combinedList);
+    }
 }

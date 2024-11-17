@@ -2,6 +2,8 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GrassFieldTest {
@@ -36,6 +38,15 @@ class GrassFieldTest {
         grassField.place(animal1);
 
         assertFalse(grassField.place(animal2));
+    }
+
+    @Test
+    void canPlaceAnimalOnGrass() {
+        GrassField grassField = new GrassField(10);
+        Vector2d grassPosition = grassField.getGrassElements().keySet().iterator().next();
+        Animal animal1 = new Animal(grassPosition);
+
+        assertTrue(grassField.place(animal1));
     }
 
     @Test
@@ -118,5 +129,32 @@ class GrassFieldTest {
         grassField.place(animal);
 
         assertTrue(grassField.canMoveTo(new Vector2d(3, 3)));
+    }
+
+    @Test
+    void getElementsReturnsCorrectAnimalsAndGrassElements() {
+        int numOfAnimals = 2;
+        int numOfGrassFields = 10;
+        GrassField grassField = new GrassField(numOfGrassFields);
+        Animal animal1 = new Animal(new Vector2d(4, 4));
+        Animal animal2 = new Animal(new Vector2d(3, 3));
+
+        grassField.place(animal1);
+        grassField.place(animal2);
+
+        List<WorldElement> worldElements = grassField.getElements();
+        assertFalse(worldElements.isEmpty());
+        int animalCounter = 0;
+        int grassFieldsCounter = 0;
+        for (WorldElement element : worldElements) {
+            if (element instanceof Animal) {
+                animalCounter++;
+            } else if (element instanceof Grass) {
+                grassFieldsCounter++;
+            }
+        }
+        assertEquals(numOfAnimals + numOfGrassFields, worldElements.size());
+        assertEquals(numOfAnimals, animalCounter);
+        assertEquals(numOfGrassFields, grassFieldsCounter);
     }
 }

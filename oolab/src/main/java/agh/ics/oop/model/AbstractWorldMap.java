@@ -2,8 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -52,6 +51,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public boolean canMoveTo(Vector2d position) {
         return !isOccupied(position);
+    }
+
+    public List<WorldElement> getElements() {
+        return List.copyOf(animals.values());
     }
 
     protected abstract Vector2d getLowerLeft();

@@ -2,6 +2,8 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RectangularMapTest {
@@ -122,5 +124,22 @@ class RectangularMapTest {
         map.place(animal);
 
         assertTrue(map.canMoveTo(new Vector2d(3, 3)));
+    }
+
+    @Test
+    void getElementsReturnsOnlyAnimals() {
+        RectangularMap map = new RectangularMap(5, 5);
+        Animal animal1 = new Animal(new Vector2d(4, 4));
+        Animal animal2 = new Animal(new Vector2d(3, 3));
+
+        map.place(animal1);
+        map.place(animal2);
+
+        List<WorldElement> animals = map.getElements();
+        assertFalse(animals.isEmpty());
+        for (Object obj : animals) {
+            assertSame(Animal.class, obj.getClass());
+        }
+        assertEquals(2, animals.size());
     }
 }
