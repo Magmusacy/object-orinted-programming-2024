@@ -54,7 +54,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     public List<WorldElement> getElements() {
-        return List.copyOf(animals.values());
+        return new ArrayList<>(animals.values());
     }
 
     protected abstract Vector2d getLowerLeft();
