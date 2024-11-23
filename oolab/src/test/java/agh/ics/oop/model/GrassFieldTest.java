@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,13 +30,26 @@ class GrassFieldTest {
     }
 
     @Test
-    void placingAnimalWorksOnlyInFirstQuadrant() {
+    void placingAnimalWorksOnTheWholeMap() {
         GrassField grassField = new GrassField(10);
 
-        assertFalse(grassField.place(new Animal(new Vector2d(-1, 2))));
-        assertFalse(grassField.place(new Animal(new Vector2d(1, -2))));
-        assertFalse(grassField.place(new Animal(new Vector2d(-1, -2))));
-        assertTrue(grassField.place(new Animal(new Vector2d(1, 2))));
+        Animal animal1 = new Animal(new Vector2d(-1, 2));
+        Animal animal2 = new Animal(new Vector2d(1, -2));
+        Animal animal3 = new Animal(new Vector2d(-1, -2));
+        Animal animal4 = new Animal(new Vector2d(1, 2));
+        System.out.println(grassField.canMoveTo(new Vector2d(-1, 2)));
+        assertDoesNotThrow(() -> {
+            grassField.place(animal1);
+            grassField.place(animal2);
+            grassField.place(animal3);
+            grassField.place(animal4);
+        });
+        Map<Vector2d, Animal> grassFieldAnimals = grassField.getAnimals();
+
+        assertTrue(grassFieldAnimals.containsKey(animal1.getPosition()));
+        assertTrue(grassFieldAnimals.containsKey(animal2.getPosition()));
+        assertTrue(grassFieldAnimals.containsKey(animal3.getPosition()));
+        assertTrue(grassFieldAnimals.containsKey(animal4.getPosition()));
     }
 
     @Test
@@ -45,9 +59,12 @@ class GrassFieldTest {
         Animal animal1 = new Animal(animalPosition);
         Animal animal2 = new Animal(animalPosition);
 
-        grassField.place(animal1);
-
-        assertFalse(grassField.place(animal2));
+        assertDoesNotThrow(() -> {
+            grassField.place(animal1);
+        });
+        assertThrows(IncorrectPositionException.class, () -> {
+            grassField.place(animal2);
+        });
     }
 
     @Test
@@ -56,28 +73,9 @@ class GrassFieldTest {
         Vector2d grassPosition = grassField.getGrassElements().keySet().iterator().next();
         Animal animal1 = new Animal(grassPosition);
 
-        assertTrue(grassField.place(animal1));
-    }
-
-    @Test
-    void moveDoesNotPermitGoingOutOfFirstQuadrant() {
-        GrassField grassField = new GrassField(10);
-        Vector2d animalPosition1 = new Vector2d(0, 0);
-        Vector2d animalPosition2 = new Vector2d(1200, 690);
-
-        Animal animal1 = new Animal(animalPosition1);
-        Animal animal2 = new Animal(animalPosition2);
-
-        grassField.place(animal1);
-        grassField.place(animal2);
-
-        grassField.move(animal1, MoveDirection.LEFT);
-        grassField.move(animal1, MoveDirection.FORWARD);
-        grassField.move(animal1, MoveDirection.LEFT);
-        grassField.move(animal1, MoveDirection.FORWARD);
-
-        assertTrue(animal1.isAt(animalPosition1));
-        assertTrue(animal2.isAt(animalPosition2));
+        assertDoesNotThrow(() -> {
+            grassField.place(animal1);
+        });
     }
 
     @Test
@@ -88,8 +86,10 @@ class GrassFieldTest {
         Animal animal1 = new Animal(animalPosition1);
         Animal animal2 = new Animal(animalPosition2);
 
-        grassField.place(animal1);
-        grassField.place(animal2);
+        assertDoesNotThrow(() -> {
+            grassField.place(animal1);
+            grassField.place(animal2);
+        });
         grassField.move(animal1, MoveDirection.BACKWARD);
 
         assertTrue(animal1.isAt(animalPosition1));
@@ -102,7 +102,9 @@ class GrassFieldTest {
         Vector2d animalPosition = new Vector2d(4, 4);
         Animal animal = new Animal(animalPosition);
 
-        grassField.place(animal);
+        assertDoesNotThrow(() -> {
+            grassField.place(animal);
+        });
 
         assertTrue(grassField.isOccupied(animalPosition));
     }
@@ -113,7 +115,9 @@ class GrassFieldTest {
         Vector2d animalPosition = new Vector2d(4, 4);
         Animal animal = new Animal(animalPosition);
 
-        grassField.place(animal);
+        assertDoesNotThrow(() -> {
+            grassField.place(animal);
+        });
 
         assertEquals(animal, grassField.objectAt(animalPosition));
     }
@@ -124,10 +128,11 @@ class GrassFieldTest {
         Vector2d animalPosition = new Vector2d(4, 4);
         Animal animal = new Animal(animalPosition);
 
-        grassField.place(animal);
+        assertDoesNotThrow(() -> {
+            grassField.place(animal);
+        });
 
         assertFalse(grassField.canMoveTo(animalPosition));
-        assertFalse(grassField.canMoveTo(new Vector2d(-1, -1)));
     }
 
     @Test
@@ -136,7 +141,9 @@ class GrassFieldTest {
         Vector2d animalPosition = new Vector2d(4, 4);
         Animal animal = new Animal(animalPosition);
 
-        grassField.place(animal);
+        assertDoesNotThrow(() -> {
+            grassField.place(animal);
+        });
 
         assertTrue(grassField.canMoveTo(new Vector2d(3, 3)));
     }
@@ -149,8 +156,10 @@ class GrassFieldTest {
         Animal animal1 = new Animal(new Vector2d(4, 4));
         Animal animal2 = new Animal(new Vector2d(3, 3));
 
-        grassField.place(animal1);
-        grassField.place(animal2);
+        assertDoesNotThrow(() -> {
+            grassField.place(animal1);
+            grassField.place(animal2);
+        });
 
         List<WorldElement> worldElements = grassField.getElements();
         assertFalse(worldElements.isEmpty());

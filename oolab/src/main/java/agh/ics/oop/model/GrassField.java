@@ -16,9 +16,10 @@ public class GrassField extends AbstractWorldMap {
         }
     }
 
-    public Map<Vector2d, Grass> getGrassElements() {
+    Map<Vector2d, Grass> getGrassElements() {
         return Collections.unmodifiableMap(grassElements);
     }
+    Map<Vector2d, Animal> getAnimals() { return Collections.unmodifiableMap(animals); }
 
     @Override
     public boolean isOccupied(Vector2d position) {
@@ -28,6 +29,11 @@ public class GrassField extends AbstractWorldMap {
     @Override
     public WorldElement objectAt(Vector2d position) {
         return super.objectAt(position) != null ? super.objectAt(position) : grassElements.get(position);
+    }
+
+    @Override
+    public boolean canMoveTo(Vector2d position) {
+        return !animals.containsKey(position);
     }
 
     @Override

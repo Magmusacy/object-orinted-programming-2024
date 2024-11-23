@@ -9,13 +9,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected final MapVisualizer map = new MapVisualizer(this);
 
     @Override
-    public boolean place(Animal animal) {
+    public void place(Animal animal) throws IncorrectPositionException {
         Vector2d position = animal.getPosition();
         if (canMoveTo(position)) {
             animals.put(position, animal);
-            return true;
+        } else {
+            throw new IncorrectPositionException(position);
         }
-        return false;
     }
 
     @Override
@@ -29,7 +29,11 @@ public abstract class AbstractWorldMap implements WorldMap {
 
         if (!prevPosition.equals(newPosition)) {
             animals.remove(prevPosition);
-            place(animal);
+            try {
+                place(animal);
+            } catch (IncorrectPositionException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
