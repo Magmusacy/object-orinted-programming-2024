@@ -49,7 +49,8 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public String toString() {
-        return map.draw(getLowerLeft(), getUpperRight());
+        Boundry boundry = getCurrentBounds();
+        return map.draw(boundry.lowerLeft(), boundry.upperRight());
     }
 
     @Override
@@ -60,7 +61,4 @@ public abstract class AbstractWorldMap implements WorldMap {
     public List<WorldElement> getElements() {
         return new ArrayList<>(animals.values());
     }
-
-    protected abstract Vector2d getLowerLeft();
-    protected abstract Vector2d getUpperRight();
 }

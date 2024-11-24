@@ -15,12 +15,7 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     @Override
-    protected Vector2d getLowerLeft() {
-        return lowerLeft;
-    }
-
-    @Override
-    protected Vector2d getUpperRight() {
-        return upperRight;
+    public Boundry getCurrentBounds() {
+        return new Boundry(lowerLeft, upperRight);
     }
 }

@@ -6,7 +6,6 @@ import java.util.*;
 
 public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grassElements = new HashMap<>();
-    private static final Vector2d LOWER_LEFT = new Vector2d(0, 0);
 
     public GrassField(int grassFieldsNumber) {
         int maxCoordinate = (int) Math.sqrt(10 * grassFieldsNumber);
@@ -37,24 +36,23 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    protected Vector2d getLowerLeft() {
-        return LOWER_LEFT;
-    }
-
-    @Override
-    protected Vector2d getUpperRight() {
-        Vector2d upperRight = LOWER_LEFT;
-        for (WorldElement element : getElements()) {
-            Vector2d position = element.getPosition();
-            upperRight = upperRight.upperRight(position);
-        }
-        return upperRight;
-    }
-
-    @Override
     public List<WorldElement> getElements() {
         List<WorldElement> combinedList = super.getElements();
         combinedList.addAll(grassElements.values());
         return combinedList;
+    }
+
+    @Override
+    public Boundry getCurrentBounds() {
+        Vector2d lowerLeft = getElements().getFirst().getPosition();
+        Vector2d upperRight = lowerLeft;
+
+        for (WorldElement element : getElements()) {
+            Vector2d position = element.getPosition();
+            lowerLeft = position.lowerLeft(lowerLeft);
+            upperRight = position.upperRight(upperRight);
+        }
+
+        return new Boundry(lowerLeft, upperRight);
     }
 }
