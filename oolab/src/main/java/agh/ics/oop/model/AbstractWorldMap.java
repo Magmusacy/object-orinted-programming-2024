@@ -50,8 +50,8 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public String toString() {
-        Boundry boundry = getCurrentBounds();
-        return map.draw(boundry.lowerLeft(), boundry.upperRight());
+        Boundary boundary = getCurrentBounds();
+        return map.draw(boundary.lowerLeft(), boundary.upperRight());
     }
 
     @Override

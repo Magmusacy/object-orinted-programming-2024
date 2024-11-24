@@ -32,7 +32,7 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return !animals.containsKey(position);
+        return !super.isOccupied(position);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public Boundry getCurrentBounds() {
+    public Boundary getCurrentBounds() {
         Vector2d lowerLeft = getElements().getFirst().getPosition();
         Vector2d upperRight = lowerLeft;
 
@@ -53,6 +53,6 @@ public class GrassField extends AbstractWorldMap {
             upperRight = position.upperRight(upperRight);
         }
 
-        return new Boundry(lowerLeft, upperRight);
+        return new Boundary(lowerLeft, upperRight);
     }
 }

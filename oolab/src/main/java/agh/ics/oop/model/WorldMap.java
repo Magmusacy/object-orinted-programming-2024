@@ -1,8 +1,5 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
-
 import java.util.List;
 
 /**
@@ -44,7 +41,7 @@ public interface WorldMap extends MoveValidator {
      */
     WorldElement objectAt(Vector2d position);
     List<WorldElement> getElements();
-    Boundry getCurrentBounds();
-    public void addObserver(MapChangeListener observer);
-    public void removeObserver(MapChangeListener observer);
+    Boundary getCurrentBounds();
+    void addObserver(MapChangeListener observer);
+    void removeObserver(MapChangeListener observer);
 }
