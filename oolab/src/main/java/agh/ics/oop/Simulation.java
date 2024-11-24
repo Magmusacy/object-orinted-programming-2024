@@ -23,7 +23,6 @@ public class Simulation {
             int currentAnimalIndex = iter++ % animals.size();
             Animal currentAnimal = animals.get(currentAnimalIndex);
             map.move(currentAnimal, direction);
-            System.out.println(map);
         }
     }
 
