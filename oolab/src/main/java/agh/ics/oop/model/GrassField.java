@@ -33,6 +33,7 @@ public class GrassField extends AbstractWorldMap {
     @Override
     public boolean canMoveTo(Vector2d position) {
         return !super.isOccupied(position);
+
     }
 
     @Override
@@ -54,5 +55,6 @@ public class GrassField extends AbstractWorldMap {
         }
 
         return new Boundary(lowerLeft, upperRight);
+
     }
 }

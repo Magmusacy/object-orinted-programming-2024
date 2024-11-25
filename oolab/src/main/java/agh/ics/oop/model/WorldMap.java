@@ -2,6 +2,8 @@ package agh.ics.oop.model;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * The interface responsible for interacting with the map of the world.
  * Assumes that Vector2d and MoveDirection classes are defined.
