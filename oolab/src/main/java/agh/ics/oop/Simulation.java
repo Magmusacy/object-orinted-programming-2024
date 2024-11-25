@@ -1,9 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.model.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +23,6 @@ public class Simulation {
             int currentAnimalIndex = iter++ % animals.size();
             Animal currentAnimal = animals.get(currentAnimalIndex);
             map.move(currentAnimal, direction);
-            System.out.println(map);
         }
     }
 
@@ -39,8 +35,11 @@ public class Simulation {
 
         for (Vector2d position : startingPositions) {
             Animal newAnimal = new Animal(position);
-            if (map.place(newAnimal)) {
+            try {
+                map.place(newAnimal);
                 animals.add(newAnimal);
+            } catch (IncorrectPositionException e) {
+                System.out.println(e.getMessage());
             }
         }
 

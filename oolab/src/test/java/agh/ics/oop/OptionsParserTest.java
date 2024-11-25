@@ -28,14 +28,11 @@ class OptionsParserTest {
     }
 
     @Test
-    void omitsIllegalOptionFromTheInput() {
+    void throwsIllegalArgumentExceptionWhenItIsAppropriate() {
         String[] options = {"l", "r", ";(", "b"};
-        List<MoveDirection> result = OptionsParser.parseOptions(options);
-        List<MoveDirection> correct = List.of(
-                MoveDirection.LEFT,
-                MoveDirection.RIGHT,
-                MoveDirection.BACKWARD
-        );
-        assertEquals(correct, result);
+        assertThrows(IllegalArgumentException.class, () -> {
+            List<MoveDirection> result = OptionsParser.parseOptions(options);
+
+        });
     }
 }
