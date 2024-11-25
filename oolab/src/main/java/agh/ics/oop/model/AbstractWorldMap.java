@@ -57,7 +57,6 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public String toString() {
         Boundary boundary = getCurrentBounds();
-        System.out.println(boundary.upperRight());
         return map.draw(boundary.lowerLeft(), boundary.upperRight());
     }
 
