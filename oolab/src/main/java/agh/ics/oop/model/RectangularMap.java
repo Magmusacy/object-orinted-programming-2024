@@ -6,9 +6,10 @@ public class RectangularMap extends AbstractWorldMap {
     private final Boundary boundary;
 
     public RectangularMap(int width, int height) {
+//        super();
         this.upperRight = new Vector2d(width - 1, height - 1);
         this.lowerLeft = new Vector2d(0, 0);
-        this.boundary = new Boundary(upperRight, lowerLeft);
+        this.boundary = new Boundary(lowerLeft, upperRight);
     }
 
     @Override
