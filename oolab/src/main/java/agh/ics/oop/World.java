@@ -2,27 +2,36 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class World {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         System.out.println("System wystartował");
+
         try {
             run(OptionsParser.parseOptions(args));
-            System.out.println("System zakończył działanie");
-            WorldMap grassField = new GrassField(10);
             WorldMap rectangularMap = new RectangularMap(10, 10);
 
-            MapChangeListener mapChangeListener = new ConsoleMapDisplay(); // jeden wystarczy
-            grassField.addObserver(mapChangeListener);
+            MapChangeListener mapChangeListener = new ConsoleMapDisplay();
             rectangularMap.addObserver(mapChangeListener);
 
             List<Vector2d> startPositions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
-            Simulation simulationGrass = new Simulation(startPositions, OptionsParser.parseOptions(args), grassField);
+            List<Simulation> simulations = new LinkedList<>();
             Simulation simulationRect = new Simulation(startPositions, OptionsParser.parseOptions(args), rectangularMap);
-            SimulationEngine simulationEngine = new SimulationEngine(List.of(simulationGrass, simulationRect));
-            simulationEngine.runSync();
+            simulations.add(simulationRect);
+            for (int i = 0; i < 2; i++) {
+                WorldMap grassField = new GrassField(10);
+                grassField.addObserver(mapChangeListener);
+                Simulation simulationGrass = new Simulation(startPositions, OptionsParser.parseOptions(args), grassField);
+                simulations.add(simulationGrass);
+            }
+
+            SimulationEngine simulationEngine = new SimulationEngine(simulations);
+            simulationEngine.runAsync();
+            simulationEngine.awaitSimulationEnd();
+            System.out.println("System zakończył działanie");
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }

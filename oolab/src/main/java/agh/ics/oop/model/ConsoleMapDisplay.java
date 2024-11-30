@@ -4,7 +4,7 @@ public class ConsoleMapDisplay implements MapChangeListener {
     private int eventsRegistered = 0;
 
     @Override
-    public void mapChanged(WorldMap worldMap, String message) {
+    public synchronized void mapChanged(WorldMap worldMap, String message) {
         eventsRegistered++;
         System.out.printf("Map id: %d%n", worldMap.getId());
         System.out.println(message);
