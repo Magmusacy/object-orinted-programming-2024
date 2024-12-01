@@ -18,10 +18,9 @@ public class World {
             rectangularMap.addObserver(mapChangeListener);
 
             List<Vector2d> startPositions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
-            List<Simulation> simulations = new LinkedList<>();
             Simulation simulationRect = new Simulation(startPositions, OptionsParser.parseOptions(args), rectangularMap);
-            simulations.add(simulationRect);
-            for (int i = 0; i < 2; i++) {
+            List<Simulation> simulations = new LinkedList<>(List.of(simulationRect));
+            for (int i = 0; i < 10000 ; i++) {
                 WorldMap grassField = new GrassField(10);
                 grassField.addObserver(mapChangeListener);
                 Simulation simulationGrass = new Simulation(startPositions, OptionsParser.parseOptions(args), grassField);
@@ -29,7 +28,7 @@ public class World {
             }
 
             SimulationEngine simulationEngine = new SimulationEngine(simulations);
-            simulationEngine.runAsync();
+            simulationEngine.runAsyncInThreadPool();
             simulationEngine.awaitSimulationEnd();
             System.out.println("System zakończył działanie");
         } catch (IllegalArgumentException e) {
