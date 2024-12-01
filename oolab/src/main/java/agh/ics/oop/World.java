@@ -20,7 +20,7 @@ public class World {
             List<Vector2d> startPositions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
             Simulation simulationRect = new Simulation(startPositions, OptionsParser.parseOptions(args), rectangularMap);
             List<Simulation> simulations = new LinkedList<>(List.of(simulationRect));
-            for (int i = 0; i < 10000 ; i++) {
+            for (int i = 0; i < 1000; i++) {
                 WorldMap grassField = new GrassField(10);
                 grassField.addObserver(mapChangeListener);
                 Simulation simulationGrass = new Simulation(startPositions, OptionsParser.parseOptions(args), grassField);

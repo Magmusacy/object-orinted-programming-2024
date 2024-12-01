@@ -9,11 +9,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected final MapVisualizer map = new MapVisualizer(this);
     // Można by tutaj też zrobić hashmape zeby usuwac observerów w O(1) ale kosztem pamięci
     protected final List<MapChangeListener> observers = new LinkedList<>();
-    private static int id_counter = 0;
-    private final int id;
+    private final UUID id;
 
     public AbstractWorldMap() {
-        this.id = id_counter++;
+        this.id = UUID.randomUUID();
     }
 
     @Override
@@ -77,7 +76,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         observers.remove(observer);
     }
 
-    public int getId() {
+    public UUID getId() {
         return this.id;
     }
 
