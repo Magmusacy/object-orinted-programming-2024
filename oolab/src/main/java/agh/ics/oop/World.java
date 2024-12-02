@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import javafx.application.Application;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +10,7 @@ public class World {
 
     public static void main(String[] args) {
         System.out.println("System wystartował");
-
+        Application.launch(SimulationApp.class, args);
         try {
             run(OptionsParser.parseOptions(args));
             WorldMap rectangularMap = new RectangularMap(10, 10);
