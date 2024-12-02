@@ -29,7 +29,11 @@ public class World {
 
             SimulationEngine simulationEngine = new SimulationEngine(simulations);
             simulationEngine.runAsyncInThreadPool();
-            simulationEngine.awaitSimulationEnd();
+            try {
+                simulationEngine.awaitSimulationEnd();
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
             System.out.println("System zakończył działanie");
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());

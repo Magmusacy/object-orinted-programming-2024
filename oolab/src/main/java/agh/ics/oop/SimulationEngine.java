@@ -30,18 +30,14 @@ public class SimulationEngine {
         }
     }
 
-    public void awaitSimulationEnd() {
-        try {
-            for (Thread thread : threads) {
-                thread.join();
-            }
+    public void awaitSimulationEnd() throws InterruptedException {
+        for (Thread thread : threads) {
+            thread.join();
+        }
 
-            executorService.shutdown();
-            if (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
-                executorService.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+        executorService.shutdown();
+        if (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+            executorService.shutdownNow();
         }
     }
 
