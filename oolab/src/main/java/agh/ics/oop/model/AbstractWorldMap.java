@@ -9,6 +9,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected final MapVisualizer map = new MapVisualizer(this);
     // Można by tutaj też zrobić hashmape zeby usuwac observerów w O(1) ale kosztem pamięci
     protected final List<MapChangeListener> observers = new LinkedList<>();
+    private final UUID id;
+
+    public AbstractWorldMap() {
+        this.id = UUID.randomUUID();
+    }
 
     @Override
     public void place(Animal animal) throws IncorrectPositionException {
@@ -69,6 +74,10 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public void removeObserver(MapChangeListener observer) {
         observers.remove(observer);
+    }
+
+    public UUID getId() {
+        return this.id;
     }
 
     private void mapChanged(String eventDescription) {

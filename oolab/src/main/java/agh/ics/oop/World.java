@@ -2,24 +2,35 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class World {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         System.out.println("System wystartował");
+
         try {
             run(OptionsParser.parseOptions(args));
-            System.out.println("System zakończył działanie");
-            //        WorldMap grassField = new GrassField(10);
             WorldMap rectangularMap = new RectangularMap(10, 10);
+
             MapChangeListener mapChangeListener = new ConsoleMapDisplay();
-            //        grassField.addObserver(mapChangeListener);
             rectangularMap.addObserver(mapChangeListener);
+
             List<Vector2d> startPositions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
-            //        Simulation simulation = new Simulation(startPositions, OptionsParser.parseOptions(args), grassField);
-            Simulation simulation = new Simulation(startPositions, OptionsParser.parseOptions(args), rectangularMap);
-            simulation.run();
+            Simulation simulationRect = new Simulation(startPositions, OptionsParser.parseOptions(args), rectangularMap);
+            List<Simulation> simulations = new LinkedList<>(List.of(simulationRect));
+            for (int i = 0; i < 1000; i++) {
+                WorldMap grassField = new GrassField(10);
+                grassField.addObserver(mapChangeListener);
+                Simulation simulationGrass = new Simulation(startPositions, OptionsParser.parseOptions(args), grassField);
+                simulations.add(simulationGrass);
+            }
+
+            SimulationEngine simulationEngine = new SimulationEngine(simulations);
+            simulationEngine.runAsyncInThreadPool();
+            simulationEngine.awaitSimulationEnd();
+            System.out.println("System zakończył działanie");
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
