@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import javafx.application.Application;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +10,6 @@ public class World {
 
     public static void main(String[] args) {
         System.out.println("System wystartował");
-
         try {
             run(OptionsParser.parseOptions(args));
             WorldMap rectangularMap = new RectangularMap(10, 10);
@@ -29,7 +29,11 @@ public class World {
 
             SimulationEngine simulationEngine = new SimulationEngine(simulations);
             simulationEngine.runAsyncInThreadPool();
-            simulationEngine.awaitSimulationEnd();
+            try {
+                simulationEngine.awaitSimulationEnd();
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
             System.out.println("System zakończył działanie");
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
