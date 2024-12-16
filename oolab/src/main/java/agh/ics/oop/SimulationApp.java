@@ -22,12 +22,12 @@ public class SimulationApp extends Application {
         configureStage(primaryStage, viewRoot);
         primaryStage.show();
 
-        WorldMap rectangularMap = new RectangularMap(10, 10);
-        presenter.setWorldMap(rectangularMap);
+        WorldMap grassField = new GrassField(10);
+        presenter.setWorldMap(grassField);
 
         MapChangeListener mapChangeListener = new ConsoleMapDisplay();
-        rectangularMap.addObserver(mapChangeListener);
-        rectangularMap.addObserver(presenter);
+        grassField.addObserver(mapChangeListener);
+        grassField.addObserver(presenter);
     }
 
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
