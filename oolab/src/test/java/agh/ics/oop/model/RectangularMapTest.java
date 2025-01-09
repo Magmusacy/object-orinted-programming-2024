@@ -164,4 +164,24 @@ class RectangularMapTest {
         }
         assertEquals(2, animals.size());
     }
+
+    @Test
+    void getOrderedAnimalsWorksCorrectly() {
+        RectangularMap map = new RectangularMap(6, 6);
+        Animal animal1 = new Animal(new Vector2d(4, 4));
+        Animal animal2 = new Animal(new Vector2d(3, 5));
+        Animal animal3 = new Animal(new Vector2d(2, 4));
+        Animal animal4 = new Animal(new Vector2d(3, 3));
+        List<Animal> expectedResult = List.of(animal3, animal4, animal2, animal1);
+
+        assertDoesNotThrow(() -> {
+            map.place(animal1);
+            map.place(animal2);
+            map.place(animal3);
+            map.place(animal4);
+        });
+
+
+        assertEquals(expectedResult, map.getOrderedAnimals());
+    }
 }

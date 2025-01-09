@@ -19,15 +19,15 @@ public class Simulation implements Runnable {
 
     public void run() {
         int iter = 0;
-        for (MoveDirection direction : directions) {
-            int currentAnimalIndex = iter++ % animals.size();
-            Animal currentAnimal = animals.get(currentAnimalIndex);
-            map.move(currentAnimal, direction);
-            try {
+        try {
+            for (MoveDirection direction : directions) {
+                int currentAnimalIndex = iter++ % animals.size();
+                Animal currentAnimal = animals.get(currentAnimalIndex);
+                map.move(currentAnimal, direction);
                 Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
             }
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
         }
     }
 

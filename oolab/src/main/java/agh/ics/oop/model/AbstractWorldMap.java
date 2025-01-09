@@ -85,4 +85,13 @@ public abstract class AbstractWorldMap implements WorldMap {
             observer.mapChanged(this, eventDescription);
         }
     }
+
+    @Override
+    public List<Animal> getOrderedAnimals() {
+        List<Animal> sortedAnimals = new ArrayList<>(animals.values());
+        sortedAnimals.sort(Comparator
+                .comparing((Animal animal) -> animal.getPosition().getX())
+                .thenComparing((animal -> animal.getPosition().getY())));
+        return sortedAnimals;
+    }
 }

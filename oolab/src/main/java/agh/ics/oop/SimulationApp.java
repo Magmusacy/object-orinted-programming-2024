@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class SimulationApp extends Application {
@@ -27,6 +29,10 @@ public class SimulationApp extends Application {
 
         MapChangeListener mapChangeListener = new ConsoleMapDisplay();
         grassField.addObserver(mapChangeListener);
+        grassField.addObserver((map, message) -> {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            System.out.println(String.format("%s : %s", dtf.format(LocalDateTime.now()), message));
+        });
         grassField.addObserver(presenter);
     }
 
