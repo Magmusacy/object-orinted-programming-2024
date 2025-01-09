@@ -3,6 +3,7 @@ package agh.ics.oop.presenter;
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.SimulationEngine;
+import agh.ics.oop.WorldElementBox;
 import agh.ics.oop.model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,8 +19,8 @@ import javafx.scene.layout.RowConstraints;
 import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
-    private static final int CELL_WIDTH = 20;
-    private static final int CELL_HEIGHT = 20;
+    private static final int CELL_WIDTH = 40;
+    private static final int CELL_HEIGHT = 40;
 
     private WorldMap worldMap;
 
@@ -73,9 +74,10 @@ public class SimulationPresenter implements MapChangeListener {
         for (WorldElement element : worldMap.getElements()) {
             int x = element.getPosition().getX();
             int y = element.getPosition().getY();
-            Label label = new Label(String.format("%s", element));
-            mapGrid.add(label, x - lowerX + 1, upperY - y + 1);
-            GridPane.setHalignment(label, HPos.CENTER);
+//            Label label = new Label(String.format("%s", element));
+            WorldElementBox worldElementBox = new WorldElementBox(element);
+            mapGrid.add(worldElementBox.getBox(), x - lowerX + 1, upperY - y + 1);
+            GridPane.setHalignment(worldElementBox.getBox(), HPos.CENTER);
         }
     }
 
