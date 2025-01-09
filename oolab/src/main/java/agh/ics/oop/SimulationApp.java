@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.util.FileMapDisplay;
 import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,7 @@ public class SimulationApp extends Application {
         primaryStage.show();
 
         WorldMap grassField = new GrassField(10);
+        FileMapDisplay fileMapDisplay = new FileMapDisplay(grassField);
         presenter.setWorldMap(grassField);
 
         MapChangeListener mapChangeListener = new ConsoleMapDisplay();
@@ -34,6 +36,7 @@ public class SimulationApp extends Application {
             System.out.println(String.format("%s : %s", dtf.format(LocalDateTime.now()), message));
         });
         grassField.addObserver(presenter);
+        grassField.addObserver(fileMapDisplay);
     }
 
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
