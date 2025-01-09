@@ -119,7 +119,8 @@ class GrassFieldTest {
             grassField.place(animal);
         });
 
-        assertEquals(animal, grassField.objectAt(animalPosition));
+        assertTrue(grassField.objectAt(animalPosition).isPresent());
+        assertEquals(animal, grassField.objectAt(animalPosition).get());
     }
 
     @Test

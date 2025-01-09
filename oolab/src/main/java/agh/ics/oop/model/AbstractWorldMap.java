@@ -49,8 +49,8 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return animals.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return Optional.ofNullable(animals.get(position));
     }
 
     @Override
@@ -88,10 +88,9 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public List<Animal> getOrderedAnimals() {
-        List<Animal> sortedAnimals = new ArrayList<>(animals.values());
-        sortedAnimals.sort(Comparator
+        return animals.values().stream().sorted(Comparator
                 .comparing((Animal animal) -> animal.getPosition().getX())
-                .thenComparing((animal -> animal.getPosition().getY())));
-        return sortedAnimals;
+                .thenComparing((animal -> animal.getPosition().getY())))
+                .toList();
     }
 }

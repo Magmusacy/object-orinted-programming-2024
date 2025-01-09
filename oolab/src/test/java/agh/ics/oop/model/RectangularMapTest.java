@@ -115,8 +115,9 @@ class RectangularMapTest {
             map.place(animal);
         });
 
-        assertEquals(animal, map.objectAt(animalPosition));
-        assertNull(map.objectAt(emptyPosition));
+        assertTrue(map.objectAt(animalPosition).isPresent());
+        assertEquals(animal, map.objectAt(animalPosition).get());
+        assertTrue(map.objectAt(emptyPosition).isEmpty());
     }
 
     @Test

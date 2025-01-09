@@ -3,12 +3,12 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.RandomPositionGenerator;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grassElements = new HashMap<>();
 
     public GrassField(int grassFieldsNumber) {
-//        super();
         int maxCoordinate = (int) Math.sqrt(10 * grassFieldsNumber);
         RandomPositionGenerator randomPositions = new RandomPositionGenerator(maxCoordinate, maxCoordinate, grassFieldsNumber);
         for (Vector2d grassPosition : randomPositions) {
@@ -27,8 +27,8 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return super.objectAt(position) != null ? super.objectAt(position) : grassElements.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return super.objectAt(position).isPresent() ? super.objectAt(position) : Optional.ofNullable(grassElements.get(position));
     }
 
     @Override
@@ -39,9 +39,7 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public List<WorldElement> getElements() {
-        List<WorldElement> combinedList = super.getElements();
-        combinedList.addAll(grassElements.values());
-        return combinedList;
+        return Stream.concat(super.getElements().stream(), grassElements.values().stream()).toList();
     }
 
     @Override

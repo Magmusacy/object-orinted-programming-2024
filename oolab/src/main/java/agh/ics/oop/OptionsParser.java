@@ -4,23 +4,19 @@ import agh.ics.oop.model.MoveDirection;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class OptionsParser {
 
     public static List<MoveDirection> parseOptions(String[] options) {
-
-        List<MoveDirection> moves = new LinkedList<>();
-
-        for (String option : options) {
-            switch (option) {
-                case "f" -> moves.add(MoveDirection.FORWARD);
-                case "b" -> moves.add(MoveDirection.BACKWARD);
-                case "r" -> moves.add(MoveDirection.RIGHT);
-                case "l" -> moves.add(MoveDirection.LEFT);
-                default -> throw new IllegalArgumentException(option + " is not legal move specification");
-            }
-        }
-
-        return moves;
+        return Stream.of(options)
+                .map(option -> switch (option) {
+                    case "f" -> MoveDirection.FORWARD;
+                    case "b" -> MoveDirection.BACKWARD;
+                    case "r" -> MoveDirection.RIGHT;
+                    case "l" -> MoveDirection.LEFT;
+                    default -> throw new IllegalArgumentException(option + " is not legal move specification");
+                })
+                .toList();
     }
 }
